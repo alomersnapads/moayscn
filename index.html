@@ -1,532 +1,1013 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>مدونة الاتصالات - آخر أخبار التكنولوجيا والاتصالات</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدونة الاتصالات | رؤى متقدمة في عالم التكنولوجيا والاتصالات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --light-gradient: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --shadow-light: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --shadow-heavy: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --accent-color: #3498db;
+        }
 
-      body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: #333;
-        background-color: #f8f9fa;
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-      }
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow-x: hidden;
+        }
 
-      header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 1rem 0;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
 
-      .header-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-      }
+        /* Header Styles */
+        header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
 
-      .logo {
-        font-size: 1.8rem;
-        font-weight: bold;
-      }
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow-light);
+        }
 
-      nav ul {
-        display: flex;
-        list-style: none;
-        gap: 2rem;
-      }
-
-      nav a {
-        color: white;
-        text-decoration: none;
-        transition: opacity 0.3s;
-      }
-
-      nav a:hover {
-        opacity: 0.8;
-      }
-
-      main {
-        padding: 2rem 0;
-      }
-
-      .hero {
-        background: white;
-        padding: 3rem 2rem;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        margin-bottom: 2rem;
-        text-align: center;
-      }
-
-      .hero h1 {
-        color: #667eea;
-        margin-bottom: 1rem;
-        font-size: 2.5rem;
-      }
-
-      .hero p {
-        font-size: 1.2rem;
-        color: #666;
-      }
-
-      .content-section {
-        background: white;
-        margin-bottom: 2rem;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-      }
-
-      .section-header {
-        background: #667eea;
-        color: white;
-        padding: 1.5rem 2rem;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: background 0.3s;
-      }
-
-      .section-header:hover {
-        background: #5a6fd8;
-      }
-
-      .section-header h2 {
-        font-size: 1.5rem;
-      }
-
-      .toggle-icon {
-        font-size: 1.2rem;
-        transition: transform 0.3s;
-      }
-
-      .section-content {
-        padding: 2rem;
-        display: none;
-      }
-
-      .section-content.active {
-        display: block;
-      }
-
-      .section-content h3 {
-        color: #667eea;
-        margin-bottom: 1rem;
-        font-size: 1.3rem;
-      }
-
-      .section-content p {
-        margin-bottom: 1rem;
-        line-height: 1.8;
-      }
-
-      .section-content ul {
-        margin-right: 2rem;
-        margin-bottom: 1rem;
-      }
-
-      .section-content li {
-        margin-bottom: 0.5rem;
-      }
-
-      .blog-posts {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin-top: 2rem;
-      }
-
-      .blog-post {
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        transition: transform 0.3s;
-      }
-
-      .blog-post:hover {
-        transform: translateY(-5px);
-      }
-
-      .post-image {
-        width: 100%;
-        height: 200px;
-        background: linear-gradient(45deg, #667eea, #764ba2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 3rem;
-      }
-
-      .post-content {
-        padding: 1.5rem;
-      }
-
-      .post-title {
-        color: #667eea;
-        margin-bottom: 0.5rem;
-        font-size: 1.2rem;
-      }
-
-      .post-excerpt {
-        color: #666;
-        line-height: 1.6;
-      }
-
-      .post-date {
-        color: #999;
-        font-size: 0.9rem;
-        margin-top: 1rem;
-      }
-
-      footer {
-        background: #333;
-        color: white;
-        text-align: center;
-        padding: 2rem 0;
-        margin-top: 3rem;
-      }
-
-      .contact-info {
-        background: #f8f9fa;
-        padding: 1.5rem;
-        border-radius: 8px;
-        margin: 1rem 0;
-      }
-
-      .contact-info h4 {
-        color: #667eea;
-        margin-bottom: 0.5rem;
-      }
-
-      @media (max-width: 768px) {
         .header-content {
-          flex-direction: column;
-          gap: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-gradient);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-light);
         }
 
         nav ul {
-          gap: 1rem;
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        nav a:hover::before {
+            left: 0;
+        }
+
+        nav a:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+            padding: 1rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 6rem 3rem;
+            border-radius: 30px;
+            margin-bottom: 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
-          font-size: 2rem;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease;
         }
 
         .hero p {
-          font-size: 1rem;
+            font-size: 1.4rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin-bottom: 3rem;
+            border-radius: 25px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 2.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .section-header:hover::before {
+            left: 100%;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .section-content {
-          padding: 1.5rem;
+            padding: 3rem;
+            display: none;
+            animation: slideDown 0.3s ease;
         }
-      }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-content h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 2px;
+        }
+
+        .section-content p {
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .section-content ul {
+            margin-right: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-content li {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        .section-content li::before {
+            content: '▶';
+            position: absolute;
+            right: 0;
+            color: var(--accent-color);
+            font-size: 0.8rem;
+        }
+
+        /* Blog Posts */
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .blog-post {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 25px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-light);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .blog-post::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-post:hover::before {
+            transform: scaleX(1);
+        }
+
+        .blog-post:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 250px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .post-content {
+            padding: 2.5rem;
+        }
+
+        .post-title {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .post-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .post-date {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .read-more {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .read-more:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Special Info Boxes */
+        .info-box {
+            background: var(--light-gradient);
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin: 2.5rem 0;
+            border-right: 5px solid var(--accent-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+        }
+
+        .info-box h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-box p {
+            position: relative;
+            z-index: 2;
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-gradient);
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+            margin-top: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--primary-gradient);
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .blog-posts {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 1rem 0;
+            }
+
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav a {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding: 4rem 2rem;
+                margin-bottom: 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-content {
+                padding: 2rem;
+            }
+
+            .blog-posts {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .post-content {
+                padding: 2rem;
+            }
+
+            main {
+                margin-top: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .hero {
+                padding: 3rem 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-header {
+                padding: 2rem;
+            }
+
+            .section-content {
+                padding: 1.5rem;
+            }
+
+            .post-content {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .loading.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <div class="header-content">
-          <div class="logo">📡 مدونة الاتصالات</div>
-          <nav>
-            <ul>
-              <li><a href="#home">الرئيسية</a></li>
-              <li><a href="#blog">المقالات</a></li>
-              <li><a href="#terms">الشروط والأحكام</a></li>
-              <li><a href="#privacy">سياسة الخصوصية</a></li>
-              <li><a href="#contact">اتصل بنا</a></li>
-            </ul>
-          </nav>
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">📡</div>
+                    <span>مدونة الاتصالات</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#blog">المقالات</a></li>
+                        <li><a href="#terms">الشروط والأحكام</a></li>
+                        <li><a href="#privacy">سياسة الخصوصية</a></li>
+                        <li><a href="#contact">اتصل بنا</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-      </div>
     </header>
 
     <main>
-      <div class="container">
-        <section id="home" class="hero">
-          <h1>مرحباً بكم في مدونة الاتصالات</h1>
-          <p>
-            مصدركم الموثوق لآخر أخبار التكنولوجيا والاتصالات والابتكارات التقنية
-          </p>
-        </section>
+        <div class="container">
+            <section id="home" class="hero loading">
+                <div class="hero-content">
+                    <h1>مرحباً بكم في مدونة الاتصالات</h1>
+                    <p>نافذتكم على عالم التكنولوجيا المتطورة والابتكارات الرقمية التي تشكل مستقبل الاتصالات</p>
+                </div>
+            </section>
 
-        <section id="blog" class="blog-posts">
-          <article class="blog-post">
-            <div class="post-image">📱</div>
-            <div class="post-content">
-              <h3 class="post-title">مستقبل شبكات الجيل الخامس في المنطقة</h3>
-              <p class="post-excerpt">
-                تطورات مثيرة في تقنية الجيل الخامس وتأثيرها على قطاع الاتصالات
-                والتكنولوجيا في المنطقة العربية...
-              </p>
-              <div class="post-date">تاريخ النشر: 15 ديسمبر 2024</div>
-            </div>
-          </article>
+            <section id="blog" class="blog-posts">
+                <article class="blog-post loading">
+                    <div class="post-image">🌐</div>
+                    <div class="post-content">
+                        <h3 class="post-title">مستقبل شبكات الجيل السادس: ثورة الاتصالات القادمة</h3>
+                        <p class="post-excerpt">استكشاف التقنيات الثورية لشبكات الجيل السادس وكيف ستغير من طريقة تفاعلنا مع العالم الرقمي، من الواقع المعزز إلى إنترنت الأشياء المتقدم...</p>
+                        <div class="post-meta">
+                            <div class="post-date">📅 22 ديسمبر 2024</div>
+                            <a href="#" class="read-more">اقرأ المزيد</a>
+                        </div>
+                    </div>
+                </article>
 
-          <article class="blog-post">
-            <div class="post-image">🛰️</div>
-            <div class="post-content">
-              <h3 class="post-title">
-                الأقمار الصناعية وثورة الإنترنت الفضائي
-              </h3>
-              <p class="post-excerpt">
-                كيف تغير تقنيات الأقمار الصناعية الحديثة من مشهد الاتصالات
-                العالمية وتوفر الإنترنت في المناطق النائية...
-              </p>
-              <div class="post-date">تاريخ النشر: 12 ديسمبر 2024</div>
-            </div>
-          </article>
+                <article class="blog-post loading">
+                    <div class="post-image">🛰️</div>
+                    <div class="post-content">
+                        <h3 class="post-title">الأقمار الصناعية الذكية وثورة الإنترنت الفضائي</h3>
+                        <p class="post-excerpt">كيف تعيد تقنيات الأقمار الصناعية المتطورة تشكيل خريطة الاتصالات العالمية وتوفر اتصالاً عالي السرعة في أبعد المناطق على وجه الأرض...</p>
+                        <div class="post-meta">
+                            <div class="post-date">📅 20 ديسمبر 2024</div>
+                            <a href="#" class="read-more">اقرأ المزيد</a>
+                        </div>
+                    </div>
+                </article>
 
-          <article class="blog-post">
-            <div class="post-image">🔒</div>
-            <div class="post-content">
-              <h3 class="post-title">أمان البيانات في عصر الاتصالات الرقمية</h3>
-              <p class="post-excerpt">
-                أهمية حماية البيانات الشخصية والتشفير في شبكات الاتصالات الحديثة
-                وأفضل الممارسات للحماية...
-              </p>
-              <div class="post-date">تاريخ النشر: 10 ديسمبر 2024</div>
-            </div>
-          </article>
-        </section>
+                <article class="blog-post loading">
+                    <div class="post-image">🔐</div>
+                    <div class="post-content">
+                        <h3 class="post-title">الأمن السيبراني في عصر الاتصالات الكمية</h3>
+                        <p class="post-excerpt">التحديات والحلول الأمنية في عالم الاتصالات الحديث، مع التركيز على التشفير الكمي وحماية البيانات في شبكات المستقبل...</p>
+                        <div class="post-meta">
+                            <div class="post-date">📅 18 ديسمبر 2024</div>
+                            <a href="#" class="read-more">اقرأ المزيد</a>
+                        </div>
+                    </div>
+                </article>
+            </section>
 
-        <section id="terms" class="content-section">
-          <div class="section-header" onclick="toggleSection('terms-content')">
-            <h2>الشروط والأحكام</h2>
-            <span class="toggle-icon">▼</span>
-          </div>
-          <div id="terms-content" class="section-content">
-            <h3>1. قبول الشروط</h3>
-            <p>
-              باستخدام موقع مدونة الاتصالات، فإنك توافق على الالتزام بهذه الشروط
-              والأحكام. إذا كنت لا توافق على أي من هذه الشروط، يرجى عدم استخدام
-              الموقع.
-            </p>
+            <section id="terms" class="content-section loading">
+                <div class="section-header" onclick="toggleSection('terms-content')">
+                    <h2>
+                        <div class="section-icon">📋</div>
+                        الشروط والأحكام
+                    </h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div id="terms-content" class="section-content">
+                    <h3>1. قبول الشروط والالتزام بها</h3>
+                    <p>بدخولك واستخدامك لموقع "مدونة الاتصالات"، فإنك تقر وتوافق على الالتزام الكامل بجميع الشروط والأحكام المنصوص عليها في هذه الوثيقة. هذه الشروط تشكل اتفاقية قانونية ملزمة بينك وبين إدارة الموقع.</p>
 
-            <h3>2. استخدام الموقع</h3>
-            <p>
-              يحق لك استخدام هذا الموقع للأغراض الشخصية والتعليمية فقط. يُمنع
-              استخدام الموقع لأي أغراض تجارية دون إذن مسبق.
-            </p>
-            <ul>
-              <li>عدم نسخ أو توزيع المحتوى دون إذن</li>
-              <li>عدم استخدام الموقع لأنشطة غير قانونية</li>
-              <li>احترام حقوق الملكية الفكرية</li>
-              <li>عدم محاولة اختراق أو إلحاق الضرر بالموقع</li>
-            </ul>
+                    <h3>2. طبيعة الخدمة المقدمة</h3>
+                    <p>موقع "مدونة الاتصالات" هو منصة إعلامية وتعليمية متخصصة في مجال تكنولوجيا الاتصالات والابتكارات الرقمية. نسعى لتقديم محتوى عالي الجودة ومعلومات موثقة من مصادر معتمدة.</p>
+                    <ul>
+                        <li>المحتوى المقدم لأغراض إعلامية وتعليمية حصرياً</li>
+                        <li>لا نقدم استشارات تقنية مهنية أو توصيات استثمارية</li>
+                        <li>المعلومات قابلة للتحديث والتطوير المستمر</li>
+                        <li>نحتفظ بحق تعديل أو إزالة أي محتوى دون إشعار مسبق</li>
+                        <li>الآراء المعبر عنها تمثل وجهة نظر الكتاب وليس بالضرورة إدارة الموقع</li>
+                    </ul>
 
-            <h3>3. المحتوى والملكية الفكرية</h3>
-            <p>
-              جميع المحتويات المنشورة على هذا الموقع محمية بحقوق الطبع والنشر.
-              يحتفظ موقع مدونة الاتصالات بجميع الحقوق في المحتوى المنشور.
-            </p>
+                    <h3>3. حقوق الاستخدام والقيود المفروضة</h3>
+                    <p>يُمنح لك ترخيص محدود وغير حصري لاستخدام محتوى الموقع للأغراض الشخصية والتعليمية، مع الالتزام الصارم بالقيود التالية:</p>
+                    <ul>
+                        <li>عدم إعادة نشر أو توزيع المحتوى دون إذن كتابي صريح</li>
+                        <li>عدم استخدام المحتوى لأغراض تجارية أو ربحية</li>
+                        <li>عدم تعديل أو تحريف المحتوى الأصلي</li>
+                        <li>وجوب ذكر المصدر عند الاقتباس أو المشاركة</li>
+                        <li>عدم محاولة اختراق أو إلحاق الضرر بأنظمة الموقع</li>
+                    </ul>
 
-            <h3>4. إخلاء المسؤولية</h3>
-            <p>
-              نسعى لتقديم معلومات دقيقة ومحدثة، لكننا لا نضمن دقة أو اكتمال
-              المعلومات المنشورة. استخدام المعلومات على مسؤوليتك الشخصية.
-            </p>
+                    <div class="info-box">
+                        <h4>⚖️ تنبيه قانوني مهم</h4>
+                        <p>أي انتهاك لحقوق الملكية الفكرية أو شروط الاستخدام قد يعرضك للمساءلة القانونية وفقاً للقوانين المعمول بها</p>
+                    </div>
 
-            <h3>5. التعديلات</h3>
-            <p>
-              نحتفظ بالحق في تعديل هذه الشروط والأحكام في أي وقت دون إشعار مسبق.
-              التعديلات تصبح سارية فور نشرها على الموقع.
-            </p>
+                    <h3>4. إخلاء المسؤولية والضمانات</h3>
+                    <p>رغم حرصنا الشديد على دقة وموثوقية المعلومات المنشورة، فإننا نخلي مسؤوليتنا عن:</p>
+                    <ul>
+                        <li>دقة أو اكتمال أو حداثة جميع المعلومات المنشورة</li>
+                        <li>أي أضرار مباشرة أو غير مباشرة قد تنتج عن استخدام المعلومات</li>
+                        <li>انقطاع الخدمة أو الأخطاء التقنية أو فقدان البيانات</li>
+                        <li>محتوى المواقع الخارجية المرتبطة أو المشار إليها</li>
+                        <li>أي خسائر مالية أو معنوية قد تحدث نتيجة الاعتماد على المحتوى</li>
+                    </ul>
 
-            <h3>6. القانون المطبق</h3>
-            <p>
-              تخضع هذه الشروط والأحكام للقوانين المعمول بها في دولة الإمارات
-              العربية المتحدة.
-            </p>
-          </div>
-        </section>
+                    <h3>5. سياسة التعديل والتحديث</h3>
+                    <p>نحتفظ بالحق المطلق في تعديل هذه الشروط والأحكام في أي وقت نراه مناسباً، وذلك لمواكبة التطورات التقنية والقانونية. التعديلات تصبح سارية المفعول فور نشرها على الموقع.</p>
 
-        <section id="privacy" class="content-section">
-          <div
-            class="section-header"
-            onclick="toggleSection('privacy-content')"
-          >
-            <h2>سياسة الخصوصية</h2>
-            <span class="toggle-icon">▼</span>
-          </div>
-          <div id="privacy-content" class="section-content">
-            <h3>1. جمع المعلومات</h3>
-            <p>نحن نجمع المعلومات التالية عند زيارتك لموقعنا:</p>
-            <ul>
-              <li>معلومات تقنية مثل عنوان IP ونوع المتصفح</li>
-              <li>معلومات الاستخدام مثل الصفحات المزارة ووقت الزيارة</li>
-              <li>معلومات الاتصال إذا قمت بالتواصل معنا</li>
-              <li>ملفات تعريف الارتباط (Cookies) لتحسين تجربة الاستخدام</li>
-            </ul>
+                    <h3>6. الاختصاص القضائي وتسوية النزاعات</h3>
+                    <p>تخضع هذه الشروط والأحكام لقوانين دولة الإمارات العربية المتحدة، وتختص محاكم دبي بالنظر في أي نزاعات قد تنشأ عن استخدام الموقع.</p>
+                </div>
+            </section>
 
-            <h3>2. استخدام المعلومات</h3>
-            <p>نستخدم المعلومات المجمعة للأغراض التالية:</p>
-            <ul>
-              <li>تحسين محتوى وخدمات الموقع</li>
-              <li>تحليل أنماط الاستخدام والإحصائيات</li>
-              <li>الرد على استفساراتكم وطلباتكم</li>
-              <li>إرسال تحديثات مهمة حول الموقع</li>
-            </ul>
+            <section id="privacy" class="content-section loading">
+                <div class="section-header" onclick="toggleSection('privacy-content')">
+                    <h2>
+                        <div class="section-icon">🔒</div>
+                        سياسة الخصوصية
+                    </h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div id="privacy-content" class="section-content">
+                    <h3>1. التزامنا الراسخ بحماية خصوصيتكم</h3>
+                    <p>في "مدونة الاتصالات"، نعتبر حماية خصوصية زوارنا ومستخدمينا أولوية قصوى ومسؤولية أخلاقية وقانونية. هذه السياسة تشرح بشفافية كاملة كيفية جمعنا واستخدامنا وحماية معلوماتكم الشخصية.</p>
 
-            <h3>3. مشاركة المعلومات</h3>
-            <p>
-              نحن لا نبيع أو نؤجر أو نشارك معلوماتك الشخصية مع أطراف ثالثة إلا
-              في الحالات التالية:
-            </p>
-            <ul>
-              <li>عند الحصول على موافقتك الصريحة</li>
-              <li>عندما يتطلب القانون ذلك</li>
-              <li>لحماية حقوقنا أو سلامة المستخدمين</li>
-            </ul>
+                    <h3>2. أنواع المعلومات التي نجمعها</h3>
+                    <p>نقوم بجمع أنواع محددة من المعلومات لتحسين خدماتنا وتقديم تجربة أفضل:</p>
+                    <ul>
+                        <li><strong>معلومات تقنية تلقائية:</strong> عنوان IP، نوع المتصفح، نظام التشغيل، دقة الشاشة</li>
+                        <li><strong>بيانات الاستخدام والتفاعل:</strong> الصفحات المزارة، مدة الجلسة، مسار التنقل</li>
+                        <li><strong>معلومات جغرافية عامة:</strong> البلد والمدينة (دون تحديد دقيق للموقع)</li>
+                        <li><strong>معلومات اختيارية:</strong> البريد الإلكتروني عند الاشتراك في النشرة الإخبارية</li>
+                        <li><strong>ملفات الارتباط:</strong> لحفظ التفضيلات وتحسين الأداء</li>
+                    </ul>
 
-            <h3>4. أمان المعلومات</h3>
-            <p>
-              نتخذ تدابير أمنية مناسبة لحماية معلوماتك من الوصول غير المصرح به
-              أو التغيير أو الكشف أو التدمير.
-            </p>
+                    <h3>3. أغراض استخدام المعلومات</h3>
+                    <p>نستخدم المعلومات المجمعة حصرياً للأغراض المشروعة والمفيدة التالية:</p>
+                    <ul>
+                        <li>تحليل وتحسين محتوى الموقع وتجربة المستخدم</li>
+                        <li>إرسال النشرة الإخبارية للمشتركين (مع إمكانية إلغاء الاشتراك)</li>
+                        <li>إنتاج إحصائيات مجهولة الهوية لفهم سلوك الزوار</li>
+                        <li>ضمان أمان الموقع ومنع الاستخدام المسيء أو الضار</li>
+                        <li>الامتثال للمتطلبات القانونية والتنظيمية</li>
+                        <li>تطوير خدمات ومحتوى جديد يلبي احتياجات الجمهور</li>
+                    </ul>
 
-            <h3>5. ملفات تعريف الارتباط</h3>
-            <p>
-              نستخدم ملفات تعريف الارتباط لتحسين تجربتك على الموقع. يمكنك تعطيل
-              هذه الملفات من إعدادات متصفحك.
-            </p>
+                    <div class="info-box">
+                        <h4>🛡️ ضمان الحماية</h4>
+                        <p>نطبق أحدث تقنيات التشفير والحماية المتقدمة لضمان أمان معلوماتكم وعدم تعرضها لأي اختراق أو سوء استخدام</p>
+                    </div>
 
-            <h3>6. حقوقك</h3>
-            <p>لديك الحق في:</p>
-            <ul>
-              <li>الوصول إلى معلوماتك الشخصية</li>
-              <li>تصحيح أو تحديث معلوماتك</li>
-              <li>طلب حذف معلوماتك</li>
-              <li>الاعتراض على معالجة معلوماتك</li>
-            </ul>
+                    <h3>4. مشاركة المعلومات مع الأطراف الثالثة</h3>
+                    <p>نحن ملتزمون التزاماً مطلقاً بعدم بيع أو تأجير أو مشاركة معلوماتكم الشخصية. قد نشارك المعلومات فقط في الحالات الاستثنائية التالية:</p>
+                    <ul>
+                        <li>عند الحصول على موافقتكم الصريحة والمكتوبة</li>
+                        <li>مع مقدمي الخدمات التقنية المعتمدين (تحت اتفاقيات سرية صارمة)</li>
+                        <li>عندما يتطلب القانون أو الأوامر القضائية ذلك</li>
+                        <li>لحماية حقوقنا القانونية أو سلامة المستخدمين</li>
+                        <li>في حالة اندماج أو استحواذ (مع ضمان استمرار الحماية)</li>
+                    </ul>
 
-            <h3>7. التحديثات</h3>
-            <p>
-              قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر. سيتم إشعاركم بأي
-              تغييرات مهمة عبر الموقع.
-            </p>
+                    <h3>5. تدابير الأمان وحماية البيانات</h3>
+                    <p>نطبق أعلى معايير الأمان الدولية لحماية معلوماتكم:</p>
+                    <ul>
+                        <li>تشفير SSL/TLS لجميع عمليات نقل البيانات</li>
+                        <li>أنظمة حماية متقدمة ضد الاختراق والبرمجيات الخبيثة</li>
+                        <li>وصول محدود ومراقب للموظفين المخولين فقط</li>
+                        <li>نسخ احتياطية آمنة ومشفرة للبيانات</li>
+                        <li>مراجعة دورية وتحديث مستمر لإجراءات الأمان</li>
+                        <li>مراقبة مستمرة للأنشطة المشبوهة</li>
+                    </ul>
 
-            <div class="contact-info">
-              <h4>للتواصل بخصوص الخصوصية:</h4>
-              <p>البريد الإلكتروني: privacy@communications-blog.com</p>
-              <p>الهاتف: +971-4-123-4567</p>
-            </div>
-          </div>
-        </section>
+                    <h3>6. حقوقكم الكاملة في البيانات</h3>
+                    <p>وفقاً لأفضل الممارسات الدولية، لديكم الحقوق التالية:</p>
+                    <ul>
+                        <li><strong>حق الوصول:</strong> طلب نسخة كاملة من بياناتكم المحفوظة</li>
+                        <li><strong>حق التصحيح:</strong> تحديث أو تصحيح أي معلومات غير دقيقة</li>
+                        <li><strong>حق الحذف:</strong> طلب حذف بياناتكم نهائياً (الحق في النسيان)</li>
+                        <li><strong>حق النقل:</strong> الحصول على بياناتكم بصيغة قابلة للنقل</li>
+                        <li><strong>حق الاعتراض:</strong> رفض معالجة بياناتكم لأغراض معينة</li>
+                        <li><strong>حق التقييد:</strong> طلب تقييد معالجة بياناتكم</li>
+                    </ul>
 
-        <section id="contact" class="content-section">
-          <div
-            class="section-header"
-            onclick="toggleSection('contact-content')"
-          >
-            <h2>اتصل بنا</h2>
-            <span class="toggle-icon">▼</span>
-          </div>
-          <div id="contact-content" class="section-content">
-            <h3>معلومات الاتصال</h3>
-            <div class="contact-info">
-              <h4>📧 البريد الإلكتروني:</h4>
-              <p>info@communications-blog.com</p>
-            </div>
+                    <h3>7. ملفات تعريف الارتباط (Cookies)</h3>
+                    <p>نستخدم ملفات الارتباط لتحسين تجربتكم وتقديم محتوى مخصص. يمكنكم التحكم الكامل في هذه الملفات من خلال إعدادات متصفحكم، مع العلم أن تعطيلها قد يؤثر على بعض وظائف الموقع.</p>
 
-            <div class="contact-info">
-              <h4>📞 الهاتف:</h4>
-              <p>+971-4-123-4567</p>
-            </div>
+                    <h3>8. التحديثات والتعديلات على السياسة</h3>
+                    <p>قد نقوم بتحديث سياسة الخصوصية هذه دورياً لمواكبة التطورات التقنية والقانونية. سيتم إشعاركم بأي تغييرات جوهرية عبر الموقع أو البريد الإلكتروني قبل 30 يوماً من سريانها.</p>
 
-            <div class="contact-info">
-              <h4>📍 العنوان:</h4>
-              <p>دبي، الإمارات العربية المتحدة</p>
-            </div>
+                    <div class="info-box">
+                        <h4>📞 تواصلوا معنا</h4>
+                        <p><strong>لأي استفسارات حول الخصوصية:</strong><br>
+                        البريد الإلكتروني: privacy@communications-blog.ae<br>
+                        الهاتف: +971-4-567-8900<br>
+                        نلتزم بالرد خلال 24 ساعة</p>
+                    </div>
+                </div>
+            </section>
 
-            <div class="contact-info">
-              <h4>🕒 ساعات العمل:</h4>
-              <p>الأحد - الخميس: 9:00 صباحاً - 6:00 مساءً</p>
-              <p>الجمعة - السبت: مغلق</p>
-            </div>
+            <section id="contact" class="content-section loading">
+                <div class="section-header" onclick="toggleSection('contact-content')">
+                    <h2>
+                        <div class="section-icon">📞</div>
+                        اتصل بنا
+                    </h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div id="contact-content" class="section-content">
+                    <h3>نحن في خدمتكم دائماً</h3>
+                    <p>فريق "مدونة الاتصالات" يسعد بتلقي استفساراتكم، اقتراحاتكم، وملاحظاتكم القيمة. نحن ملتزمون بتقديم أفضل خدمة ودعم لجميع زوارنا الكرام.</p>
+                    
+                    <div class="info-box">
+                        <h4>📧 البريد الإلكتروني الرئيسي</h4>
+                        <p><strong>info@communications-blog.ae</strong><br>
+                        للاستفسارات العامة والاقتراحات والشراكات</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>✍️ فريق التحرير والمحتوى</h4>
+                        <p><strong>editorial@communications-blog.ae</strong><br>
+                        لاقتراح المواضيع، التعاون في المحتوى، والمساهمات العلمية</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>🤝 الشراكات والتعاون</h4>
+                        <p><strong>partnerships@communications-blog.ae</strong><br>
+                        للشراكات الاستراتيجية والتعاون المؤسسي</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>📞 الهاتف والواتساب</h4>
+                        <p><strong>+971-4-567-8900</strong><br>
+                        متاح من الأحد إلى الخميس، 9:00 ص - 6:00 م</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>📍 العنوان الرسمي</h4>
+                        <p><strong>دبي، الإمارات العربية المتحدة</strong><br>
+                        مركز دبي المالي العالمي<br>
+                        برج الإمارات، الطابق 25<br>
+                        ص.ب: 12345، دبي</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>🕒 ساعات العمل الرسمية</h4>
+                        <p><strong>الأحد - الخميس:</strong> 9:00 صباحاً - 6:00 مساءً<br>
+                        <strong>الجمعة:</strong> 9:00 صباحاً - 12:00 ظهراً<br>
+                        <strong>السبت:</strong> عطلة أسبوعية</p>
+                    </div>
 
-            <h3>تابعونا على وسائل التواصل الاجتماعي</h3>
-            <p>
-              للحصول على آخر التحديثات والأخبار في عالم الاتصالات والتكنولوجيا.
-            </p>
-          </div>
-        </section>
-      </div>
+                    <h3>تابعونا على وسائل التواصل الاجتماعي</h3>
+                    <p>للحصول على آخر التحديثات والأخبار العاجلة في عالم الاتصالات والتكنولوجيا، تابعونا على منصاتنا الرسمية:</p>
+                    
+                    <div class="info-box">
+                        <h4>🌐 منصاتنا الرقمية</h4>
+                        <p>تويتر: @CommsBlogAE<br>
+                        لينكد إن: مدونة الاتصالات<br>
+                        يوتيوب: قناة مدونة الاتصالات<br>
+                        تيليجرام: @CommunicationsBlogAE</p>
+                    </div>
+
+                    <h3>التزامنا بخدمة العملاء</h3>
+                    <p>نلتزم بالرد على جميع استفساراتكم خلال 24 ساعة كحد أقصى. في حالة الاستفسارات العاجلة، يرجى الاتصال بنا هاتفياً أو عبر الواتساب خلال ساعات العمل الرسمية.</p>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer>
-      <div class="container">
-        <p>&copy; 2024 مدونة الاتصالات. جميع الحقوق محفوظة.</p>
-        <p>تم تطوير الموقع بأحدث تقنيات الويب لضمان أفضل تجربة للمستخدم</p>
-      </div>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 مدونة الاتصالات. جميع الحقوق محفوظة.</p>
+                <p>رؤى متقدمة في عالم التكنولوجيا والاتصالات الحديثة</p>
+            </div>
+        </div>
     </footer>
 
     <script>
-      function toggleSection(sectionId) {
-        const content = document.getElementById(sectionId);
-        const icon =
-          content.previousElementSibling.querySelector('.toggle-icon');
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
 
-        if (content.classList.contains('active')) {
-          content.classList.remove('active');
-          icon.style.transform = 'rotate(0deg)';
-        } else {
-          // إغلاق جميع الأقسام الأخرى
-          document.querySelectorAll('.section-content').forEach((section) => {
-            section.classList.remove('active');
-          });
-          document.querySelectorAll('.toggle-icon').forEach((icon) => {
-            icon.style.transform = 'rotate(0deg)';
-          });
-
-          // فتح القسم المحدد
-          content.classList.add('active');
-          icon.style.transform = 'rotate(180deg)';
+        // Toggle sections
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const icon = content.previousElementSibling.querySelector('.toggle-icon');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                // Close all other sections
+                document.querySelectorAll('.section-content').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.querySelectorAll('.toggle-icon').forEach(icon => {
+                    icon.style.transform = 'rotate(0deg)';
+                });
+                
+                // Open selected section
+                content.classList.add('active');
+                icon.style.transform = 'rotate(180deg)';
+            }
         }
-      }
 
-      // تفعيل التنقل السلس
-      document.querySelectorAll('nav a').forEach((link) => {
-        link.addEventListener('click', function (e) {
-          e.preventDefault();
-          const targetId = this.getAttribute('href').substring(1);
-          const targetSection = document.getElementById(targetId);
-
-          if (targetSection) {
-            targetSection.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
+        // Smooth scrolling
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    const headerHeight = document.getElementById('header').offsetHeight;
+                    const targetPosition = targetSection.offsetTop - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
             });
-          }
-        });
-      });
-
-      // إضافة تأثيرات تفاعلية للمقالات
-      document.querySelectorAll('.blog-post').forEach((post) => {
-        post.addEventListener('mouseenter', function () {
-          this.style.boxShadow = '0 10px 25px rgba(0,0,0,0.15)';
         });
 
-        post.addEventListener('mouseleave', function () {
-          this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+        // Loading animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('loaded');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.loading').forEach(element => {
+            observer.observe(element);
         });
-      });
+
+        // Enhanced hover effects
+        document.querySelectorAll('.blog-post').forEach(post => {
+            post.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            post.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Initialize loading animations
+        setTimeout(() => {
+            document.querySelectorAll('.loading').forEach(element => {
+                element.classList.add('loaded');
+            });
+        }, 100);
     </script>
-  </body>
+</body>
 </html>
